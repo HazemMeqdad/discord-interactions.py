@@ -26,7 +26,7 @@ SOFTWARE.
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Union, List
+from typing import Union, List, Any
 
 
 class ApplicationCommandOptionType(Enum):
@@ -58,6 +58,8 @@ class ApplicationCommandOption:
     required: bool = False
     choices: List[ApplicationCommandOptionChoice] = None
     options: List["ApplicationCommandOption"] = None
+    name_localizations: Any = None
+    description_localizations: Any = None
 
     @classmethod
     def from_dict(cls, data) -> "ApplicationCommandOption":
