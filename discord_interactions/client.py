@@ -142,7 +142,6 @@ class ApplicationClient(_BaseClient):
             if not isinstance(cmd, Cmd):
                 cmd = cmd.to_application_command()
             commands_data.append(cmd.to_dict())
-        print(commands_data)
         r = self._send(
             Request("PUT", self._cmd_url(guild_id=guild), json=commands_data)
         )
