@@ -39,7 +39,7 @@ from . import ocm
 
 CmdClass = Type[ocm.Command]
 
-API_BASE_URL = "https://discord.com/api/v8"
+API_BASE_URL = "https://discord.com/api/v10"
 
 
 class _BaseClient:
