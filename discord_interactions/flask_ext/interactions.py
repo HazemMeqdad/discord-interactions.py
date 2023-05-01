@@ -36,6 +36,7 @@ from discord_interactions import (
     verify_key,
     ApplicationCommand,
     ApplicationClient,
+    ApplicationCommandType
 )
 from discord_interactions import ocm
 from typing import Callable, Union, Type, Dict, List, Tuple, Optional, Any
@@ -217,6 +218,7 @@ class Interactions:
 
         self._commands: Dict[str, CommandData] = {}
         self._components: Dict[str, ComponentData] = {}
+        self._message_commands: Dict[str, Callable] = {}
 
     @property
     def path(self) -> str:
@@ -279,11 +281,11 @@ class Interactions:
             # handle a ping
             return jsonify(InteractionResponse(InteractionCallbackType.PONG).to_dict())
         elif interaction.type == InteractionType.APPLICATION_COMMAND:
-            # handle an application command (slash command)
             cmd_name = interaction.data.name
             cb = self._commands[cmd_name].callback
             ctx = CommandContext(interaction)
             cmd: Optional[ocm.Command] = None
+            # handle an application command (slash command)
 
             if cb.__code__.co_argcount > 1:
                 # the cb takes more than one argument; pass them
@@ -540,4 +542,13 @@ class Interactions:
         def decorator(f: _ComponentCallback) -> ComponentData:
             return self.register_component(component_id, f)
 
+        return decorator
+    
+    def register_message_command(self, name: str, callback: Callable):
+        self._message_commands[name] = callback
+
+    def message_command(self, name: str):
+        def decorator(f: Callable):
+            self.register_message_command(name, f)
+            return f
         return decorator

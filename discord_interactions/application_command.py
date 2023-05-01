@@ -28,6 +28,11 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Union, List, Any
 
+class ApplicationCommandType(Enum):
+    CHAT_INPUT = 1
+    USER = 2
+    MESSAGE = 3
+
 
 class ApplicationCommandOptionType(Enum):
     SUB_COMMAND = 1
@@ -105,6 +110,7 @@ class ApplicationCommand:
         self.description = description
         self.options = options
         self.default_permission = default_permission
+        self.type = ApplicationCommandType(kwargs.get("type", 1))
 
     def add_option(self, option: ApplicationCommandOption):
         if self.options is None:
@@ -130,5 +136,7 @@ class ApplicationCommand:
             data["options"] = [option.to_dict() for option in self.options]
         if not self.default_permission:  # omit when set to true
             data["default_permission"] = self.default_permission
+        if self.type:
+            data["type"] = self.type.value
 
         return data

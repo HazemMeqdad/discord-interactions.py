@@ -36,6 +36,7 @@ from discord_interactions import (
     ApplicationCommandOption,
     ApplicationCommandOptionType,
     ApplicationCommandOptionChoice,
+    ApplicationCommandType
 )
 from typing import List, Union, Type, Any
 from dataclasses import dataclass
@@ -220,6 +221,7 @@ class Command(OptionContainer, metaclass=CommandType):
 
     __cmd_name__ = None
     __cmd_description__ = None
+    __cmd_type__: ApplicationCommandType = ApplicationCommandType.CHAT_INPUT
 
     __interaction: Interaction = None
 
@@ -274,6 +276,7 @@ class Command(OptionContainer, metaclass=CommandType):
             name=cls.__cmd_name__,
             description=cls.__cmd_description__,
             options=options or None,
+            type=cls.__cmd_type__,
         )
 
 

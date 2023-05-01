@@ -48,6 +48,7 @@ class ApplicationCommandInteractionDataResolved:
         self.channels = {
             c_id: Channel(**c) for c_id, c in kwargs.get("channels", {}).items()
         }
+        self.messages = {m_id: Message(**m) for m_id, m in kwargs.get("messages", {}).items()}
 
 
 class _OptionGetter:

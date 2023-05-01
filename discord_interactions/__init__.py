@@ -22,6 +22,7 @@ from .application_command import (
     ApplicationCommandOption,
     ApplicationCommandOptionType,
     ApplicationCommandOptionChoice,
+    ApplicationCommandType
 )
 
 from .message_component import (
